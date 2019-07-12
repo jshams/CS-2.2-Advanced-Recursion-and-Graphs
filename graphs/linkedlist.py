@@ -34,6 +34,12 @@ class LinkedList(object):
         """Return a string representation of this linked list."""
         return 'LinkedList({!r})'.format(self.items())
 
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node
+            node = node.next
+
     def items(self):
         """Return a list (dynamic array) of all items in this linked list."""
         items = []  # O(1) time to create empty list
