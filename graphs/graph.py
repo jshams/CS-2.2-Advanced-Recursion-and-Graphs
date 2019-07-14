@@ -7,6 +7,7 @@ class Vertex(object):
 
     def points_to(self, pointer):
         self.pointers.append(pointer)
+        
 
 class ADTGraph(object):
     def __init__(self, FILE_PATH = ''):
