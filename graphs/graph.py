@@ -7,7 +7,9 @@ class Vertex(object):
 
     def points_to(self, pointer):
         self.pointers.append(pointer)
-        
+    
+    def is_pointing_to(self, pointer):
+        return pointer in self.pointers
 
 class ADTGraph(object):
     def __init__(self, FILE_PATH = ''):
@@ -41,7 +43,7 @@ class ADTGraph(object):
         return [pointer for pointer in x.pointers]
 
 class FileReader(object):
-    def __init__(self, PATH):
+    def __init__(self, PATH = None):
         self.PATH = PATH
     
     def read_from_g(self):
@@ -65,8 +67,8 @@ class FileReader(object):
             v2 = int(v2)
         return v1, v2
 
-def test_ADTGraph():
-    print(ADTGraph().split_line('(12,353)'))
+def test_FileReader():
+    print(FileReader().split_line('(12,353)'))
 
 if __name__ == '__main__':
-    test_ADTGraph()
+    test_FileReader()
