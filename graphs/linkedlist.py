@@ -40,6 +40,12 @@ class LinkedList(object):
             yield node
             node = node.next
 
+    def __contains__(self, item):
+        for node in self:
+            if node.data == item:
+                return True
+        return False
+
     def items(self):
         """Return a list (dynamic array) of all items in this linked list."""
         items = []  # O(1) time to create empty list
@@ -60,7 +66,6 @@ class LinkedList(object):
     def length(self):
         """Return the length of this linked list by traversing its nodes."""
         return self.size
-
 
     def append(self, item):
         """Insert the given item at the tail of this linked list."""
