@@ -3,7 +3,6 @@
 from linkedlist import LinkedList, Node
 import unittest
 
-
 class NodeTest(unittest.TestCase):
 
     def test_init(self):
@@ -38,6 +37,12 @@ class LinkedListTest(unittest.TestCase):
         # Initializer should append items in order
         assert ll.head.data == 'A'  # First item
         assert ll.tail.data == 'C'  # Last item
+
+    def test_contains(self):
+        ll = LinkedList(['A', 'B', 'C'])
+        assert 'A' in ll
+        assert 'B' in ll
+        assert 'C' in ll
 
     def test_items_after_append(self):
         ll = LinkedList()
