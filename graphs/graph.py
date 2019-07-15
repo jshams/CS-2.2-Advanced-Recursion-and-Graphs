@@ -37,4 +37,4 @@ class ADTGraph(object):
         return [pointer for pointer in x.pointers]
 
 if __name__ == '__main__':
-    test_FileReader()
+    pass
