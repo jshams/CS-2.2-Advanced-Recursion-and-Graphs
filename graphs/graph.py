@@ -3,14 +3,16 @@ from file_reader import FileReader
 
 
 class ADTGraph(object):
-    def __init__(self, FILE_PATH):
+    def __init__(self, FILE_PATH=None):
         self.f = FileReader(FILE_PATH)
         self.vertices = {}  # dictionary of verticies
+        self.edges = []
         self.vertex_count = 0
         self.edge_count = 0
-        self.all_verticies, self.edges = self.f.read_file()
-        self.add_verticies(self.all_verticies)
-        self.add_egdes(self.edges)
+        if FILE_PATH is not None:
+            all_verticies, self.edges = self.f.read_file()
+            self.add_verticies(all_verticies)
+            self.add_egdes(self.edges)
 
     def __iter__(self):
         '''yields each vertex key'''
