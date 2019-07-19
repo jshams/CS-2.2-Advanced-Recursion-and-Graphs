@@ -37,7 +37,7 @@ class LinkedList(object):
     def __iter__(self):
         node = self.head
         while node is not None:
-            yield node
+            yield node.data
             node = node.next
 
     def __contains__(self, item):
@@ -73,11 +73,10 @@ class LinkedList(object):
         old_tail = self.tail
         self.tail = new_node
         if old_tail is not None:
-          old_tail.next = new_node
+            old_tail.next = new_node
         if self.head is None:
             self.head = new_node
         self.size += 1
-
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list."""
@@ -110,7 +109,6 @@ class LinkedList(object):
                 return
             curr_node = cur_node.next
         return None
-
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError."""
@@ -149,10 +147,6 @@ class LinkedList(object):
             prev_node = curr_node
             curr_node = curr_node.next
         raise ValueError('Item not found: {}'.format(item))
-
-
-
-
 
 
 def test_linked_list():
