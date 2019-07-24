@@ -67,6 +67,7 @@ class ADTGraph(object):
                     print(pointer)
                     seen.add(pointer)
                     queue.enqueue(pointer)
+        # return seen
 
     def shortest_path(self, a, b):
         '''finds the shortest path between two points and returns None if there are none'''
@@ -81,10 +82,19 @@ class ADTGraph(object):
                     seen[pointer] = seen[vertex] + [vertex]
                     queue.enqueue(pointer)
 
-    def recursive_dfs(self, a, b):
+    def recursive_dfs(self, a, b, visited=None):
         '''traverses the graph in DFS order from start to end
         returns a boolean expressing whether a path exists or not'''
-        return True
+        if visited is None:
+            visited = {a}
+        print(a)
+        for neighbor in self.get_vertex(a).pointers:
+            if neighbor == b:
+                print(neighbor)
+                return True
+            else:
+                visited.add(neighbor)
+                return self.recursive_dfs(neighbor, b, visited)
 
     def dijkstras(self, a, b):
         '''finds the shortest weighted path between a start and an end
@@ -96,3 +106,5 @@ if __name__ == '__main__':
     g = ADTGraph('file_reader_test.txt')
     shotest_path = g.shortest_path('5', '2')
     print(shotest_path)
+    dfs = g.recursive_dfs('5', '2')
+    print(dfs)
