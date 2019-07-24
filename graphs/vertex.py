@@ -1,4 +1,4 @@
-from linkedlist import LinkedList
+#!python
 
 
 class Vertex(object):
