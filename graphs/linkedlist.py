@@ -104,10 +104,10 @@ class LinkedList(object):
     def replace(self, word, replacement):
         cur_node = self.head
         while cur_node:
-            if curr_node.data == word:
+            if cur_node.data == word:
                 cur_node.data = replacement
                 return
-            curr_node = cur_node.next
+            cur_node = cur_node.next
         return None
 
     def delete(self, item):
