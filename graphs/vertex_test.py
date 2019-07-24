@@ -20,8 +20,8 @@ class VertexTest(unittest.TestCase):
     def test_is_pointing_to(self):
         one = Vertex('one')
         two = Vertex('two')
-        one.points_to(two)
-        two.points_to(one)
+        one.points_to('two')
+        two.points_to('one')
         assert one.is_pointing_to('two') is True
         assert two.is_pointing_to('one') is True
         assert one.is_pointing_to('three') is False
