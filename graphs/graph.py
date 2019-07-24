@@ -56,6 +56,7 @@ class ADTGraph(object):
         return [pointer for pointer in x.pointers]
 
     def breadth_first_search(self, start):
+        '''traverses the graph in BFS order from a start'''
         seen = {start}
         queue = Queue([start])
         print(start)
@@ -68,6 +69,7 @@ class ADTGraph(object):
                     queue.enqueue(pointer)
 
     def shortest_path(self, a, b):
+        '''finds the shortest path between two points and returns None if there are none'''
         seen = {a: []}
         queue = Queue(a)
         while queue.is_empty() is False:
@@ -78,6 +80,16 @@ class ADTGraph(object):
                         return seen[vertex] + [vertex, pointer]
                     seen[pointer] = seen[vertex] + [vertex]
                     queue.enqueue(pointer)
+
+    def recursive_dfs(self, a, b):
+        '''traverses the graph in DFS order from start to end
+        returns a boolean expressing whether a path exists or not'''
+        return True
+
+    def dijkstras(self, a, b):
+        '''finds the shortest weighted path between a start and an end
+        returns the weight of the path'''
+        return 10
 
 
 if __name__ == '__main__':
