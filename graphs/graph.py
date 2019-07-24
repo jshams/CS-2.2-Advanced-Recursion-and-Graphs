@@ -1,5 +1,6 @@
 from vertex import Vertex
 from file_reader import FileReader
+from queue import Queue
 
 
 class ADTGraph(object):
@@ -28,17 +29,20 @@ class ADTGraph(object):
         for vert in verts:
             self.add_vertex(vert)
 
-    def add_edge(self, from_vert_key, to_vert_key, weight=1):
+    def add_edge(self, from_key, to_key, weight=1):
         '''Adds a new, weighted, directed edge to the graph that connects two vertices.'''
-        from_vert = self.get_vertex(from_vert_key)
-        to_vert = self.get_vertex(to_vert_key)
-        if from_vert is None:
-            raise KeyError(f'{from_vert} key not found in graph')
-        elif to_vert is None:
-            raise KeyError(f'{to_vert} key not found in graph')
-        else:
-            from_vert.points_to(to_vert)
-            self.edge_count += 1
+        # from_vert = self.get_vertex(from_vert_key)
+        # to_vert = self.get_vertex(to_vert_key)
+        # if from_vert is None:
+        #     raise KeyError(f'{from_vert} key not found in graph')
+        # elif to_vert is None:
+        #     raise KeyError(f'{to_vert} key not found in graph')
+        if from_key not in self.vertices:
+            raise KeyError(f'{from_key} vertex not found in graph')
+        if to_key not in self.vertices:
+            raise KeyError(f'{to_key} vertex not found in graph')
+        self.vertices[from_key].points_to(to_key)
+        self.edge_count += 1
 
     def add_egdes(self, edges):
         for edge in edges:
@@ -57,6 +61,15 @@ class ADTGraph(object):
         '''lists all vertices y such that there is an edge from the vertex x to the vertex y.'''
         return [pointer for pointer in x.pointers]
 
+    def breadth_first_search(self, start, end):
+        seen = {start}
+        queue = Queue([start])
+        while queue.is_empty() is False:
+            vertex = queue.dequeue()
+            for pointer in self.vertices[vertex].pointers:
+                print(pointer)
+
 
 if __name__ == '__main__':
-    pass
+    g = ADTGraph('file_reader_test.txt')
+    g.breadth_first_search('1', '2')
