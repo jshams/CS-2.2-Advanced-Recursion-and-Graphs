@@ -13,6 +13,6 @@ class Vertex(object):
     def is_pointing_to(self, item: str):
         '''returns a boolean indicating whether the vertex is pointing to another item'''
         for vert in self.pointers:
-            if vert[0].data == item:
+            if vert[0] == item:
                 return True
         return False
