@@ -6,15 +6,15 @@ class VertexTest(unittest.TestCase):
     def test_init(self):
         vert = Vertex(1)
         assert vert.data is 1
-        assert len(vert.pointers) == 0
+        assert len(vert.neighbors) == 0
 
     def test_points_to(self):
         one = Vertex('one')
         two = Vertex('two')
         one.points_to(two)
         two.points_to(one)
-        assert len(one.pointers) == 1
-        assert len(two.pointers) == 1
+        assert len(one.neighbors) == 1
+        assert len(two.neighbors) == 1
 
     def test_is_pointing_to(self):
         one = Vertex('one')
