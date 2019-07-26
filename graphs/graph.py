@@ -51,55 +51,73 @@ class ADTGraph(object):
         '''returns the list of all vertices in the graph.'''
         return [vertex for vertex in self]
 
+    def get_neighbor_keys(self, x):
+        '''lists all vertices y such that there is an edge from the vertex x to the vertex y.'''
+        return list(x.neighbors.keys())
+
     def get_neighbors(self, x):
         '''lists all vertices y such that there is an edge from the vertex x to the vertex y.'''
-        return [pointer for pointer in x.pointers]
+        # return [neighbor for neighbor in x.neighbors.values()]
+        return list(x.neighbors.values())
 
-    def breadth_first_search(self, start):
+    def breadth_first_search(self, start: str):
         '''traverses the graph in BFS order from a start'''
         seen = {start}
         queue = Queue([start])
         print(start)
-        while queue.is_empty() is False:
-            vertex = queue.dequeue()
-            for pointer in self.get_vertex(vertex).pointers:
-                if not pointer in seen:
-                    print(pointer)
-                    seen.add(pointer)
-                    queue.enqueue(pointer)
-        # return seen
+        while not queue.is_empty():
+            vertex_key = queue.dequeue()
+            for neighbor in self.get_vertex(vertex_key).neighbors:
+                if neighbor not in seen:
+                    print(neighbor)
+                    seen.add(neighbor)
+                    queue.enqueue(neighbor)
+        return list(seen)
 
-    def shortest_path(self, a, b):
+    def shortest_path(self, start: str, end: str):
         '''finds the shortest path between two points and returns None if there are none'''
-        seen = {a: []}
-        queue = Queue(a)
-        while queue.is_empty() is False:
-            vertex = queue.dequeue()
-            for pointer in self.get_vertex(vertex).pointers:
-                if not pointer in seen:
-                    if pointer == b:
-                        return seen[vertex] + [vertex, pointer]
-                    seen[pointer] = seen[vertex] + [vertex]
-                    queue.enqueue(pointer)
+        seen = {start: [start]}
+        queue = Queue([start])
+        while not queue.is_empty():
+            vertex_key = queue.dequeue()
+            for neighbor in self.get_vertex(vertex_key).neighbors:
+                if neighbor not in seen:
+                    seen[neighbor] = seen[vertex_key] + [neighbor]
+                    if neighbor == end:
+                        print(seen[neighbor])
+                        return seen[neighbor]
+                    queue.enqueue(neighbor)
+        return None
 
-    def recursive_dfs(self, a, b, visited=None):
+    def recursive_dfs(self, start, end, visited=None):
         '''traverses the graph in DFS order from start to end
         returns a boolean expressing whether a path exists or not'''
         if visited is None:
-            visited = {a}
-        print(a)
-        for neighbor in self.get_vertex(a).pointers:
-            if neighbor == b:
+            visited = {start}
+        print(start)
+        for neighbor in self.get_vertex(start).neighbors:
+            if neighbor == end:
                 print(neighbor)
                 return True
             else:
                 visited.add(neighbor)
-                return self.recursive_dfs(neighbor, b, visited)
+                return self.recursive_dfs(neighbor, end, visited)
 
-    def dijkstras(self, a, b):
+    def dijkstras(self, start, end):
         '''finds the shortest weighted path between a start and an end
         returns the weight of the path'''
         return 10
+
+    def prims(self):
+        edges = []
+        smallest_edge = (0, 0, float('inf'))
+        sorted_edges = sorted(self.edges, key=lambda tuple: tuple[2])
+        # from operator import itemgetter
+        # sorted_edges = sorted(self.edges, key=itemgetter(2))
+        for edge in sorted_edges:
+            if edge[2] < smallest_edge[2]:
+                smallest_edge = edge
+        edges.append(smallest_edge)
 
 
 if __name__ == '__main__':
