@@ -8,4 +8,4 @@ if __name__ == '__main__':
     g = ADTGraph(PATH)
     shortest_path = g.shortest_path(a, b)
     print(f'Vertices in shortest path: {", ".join(shortest_path)}')
-    print(f'Number of edges in shortest path: {len(shortest_path)}')
+    print(f'Number of edges in shortest path: {len(shortest_path) - 1}')
