@@ -42,7 +42,7 @@ class LinkedList(object):
 
     def __contains__(self, item):
         for node in self:
-            if node.data == item:
+            if node == item:
                 return True
         return False
 
