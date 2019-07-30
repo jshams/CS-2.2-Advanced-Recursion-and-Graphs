@@ -10,8 +10,11 @@ class ADTGraph(object):
         self.edges = []
         self.vertex_count = 0
         self.edge_count = 0
+        self.digraph = None
         if FILE_PATH is not None:
-            all_verticies, self.edges = self.f.read_file()
+            all_verticies = self.f.verticies
+            self.edges = self.f.edges
+            self.digraph = self.f.digraph
             self.add_verticies(all_verticies)
             self.add_egdes(self.edges)
 
