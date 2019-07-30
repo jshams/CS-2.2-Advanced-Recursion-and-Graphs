@@ -10,11 +10,11 @@ class GraphTest(unittest.TestCase):
         path = 'file_reader_test.txt'
         g = ADTGraph(path)
         self.assertCountEqual(g.vertices.keys(), ['1', '2', '3', '4', '5'])
-        egde_list = [('1', '2'), ('2', '1'), ('2', '3'), ('3', '2'), ('3', '4'),
-                     ('4', '3'), ('4', '5'), ('5', '4'), ('5', '1'), ('1', '5')]
+        egde_list = [('1', '2'), ('2', '3'),  ('3', '4'),
+                     ('4', '5'),  ('5', '1')]
         self.assertCountEqual(g.edges, egde_list)
         assert g.vertex_count == 5
-        assert g.edge_count == 10
+        assert g.edge_count == 5
         assert g.vertices['1'].is_pointing_to('2') is True
 
     def test_add_vertex(self):
