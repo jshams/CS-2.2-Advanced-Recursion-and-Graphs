@@ -1,26 +1,39 @@
 class FileReader(object):
-    def __init__(self, PATH=None):
+    def __init__(self, PATH='file_reader_test.txt'):
         self.PATH = PATH
+        self.digraph = None
+        self.verticies = []
+        self.edges = []
+        if self.PATH is not None:
+            self._graph_or_digraph()
+            self._read_file()
 
-    def read_file(self):
-        directional = True
-        verticies = []
-        edges = []
+    def _graph_or_digraph(self):
+        f = open(self.PATH, "r")
+        first_char = f.read(1)
+        if first_char == 'G':
+            self.digraph = False
+        elif first_char == 'D':
+            self.digraph = True
+        else:
+            raise Exception(f"File must begin with G or D, found {first_char}")
+        f.close()
+
+    def _read_file(self):
         f = open(self.PATH, "r")
         for i, line in enumerate(f.read().splitlines()):
             if i == 0:
-                if 'G' in line:
-                    directional = False
+                continue
             elif i == 1:
-                verticies = line.split(',')
+                self.verticies = line.split(',')
             else:
                 tuple_line = self.line_to_tuple(line)
-                edges.append(tuple_line)
-                if directional is False:
-                    edges.append(
+                self.edges.append(tuple_line)
+                if self.digraph is False:
+                    self.edges.append(
                         (tuple_line[1], tuple_line[0], *tuple_line[2:]))
         f.close()
-        return verticies, edges
+        return self.verticies, self.edges
 
     # def line_to_tuple(self, line):
     #     # O(n) solution
