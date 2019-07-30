@@ -29,9 +29,6 @@ class FileReader(object):
             else:
                 tuple_line = self.line_to_tuple(line)
                 self.edges.append(tuple_line)
-                if self.digraph is False:
-                    self.edges.append(
-                        (tuple_line[1], tuple_line[0], *tuple_line[2:]))
         f.close()
         return self.verticies, self.edges
 
