@@ -43,8 +43,10 @@ class ADTGraph(object):
             raise KeyError(f'{from_key} vertex not found in graph')
         if to_key not in self.vertices:
             raise KeyError(f'{to_key} vertex not found in graph')
-        self.get_vertex(from_key).points_to(to_key)
+        self.get_vertex(from_key).points_to(to_key, weight)
         self.edge_count += 1
+        if self.digraph is False:
+            self.get_vertex(to_key).points_to(from_key, weight)
 
     def add_egdes(self, edges):
         for edge in edges:
