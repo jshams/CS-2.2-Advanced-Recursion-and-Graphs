@@ -6,4 +6,6 @@ if __name__ == '__main__':
     g = ADTGraph(PATH)
     print(f'Verticies: {g.vertex_count}')
     print(f'Edges: {g.edge_count}')
-    print(f'Edge List: { g.edges }')
+    print('Edge List:')
+    for edge in g.edges:
+        print(edge)
