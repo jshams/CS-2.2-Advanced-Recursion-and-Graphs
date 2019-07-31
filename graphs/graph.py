@@ -43,7 +43,7 @@ class ADTGraph(object):
             raise KeyError(f'{from_key} vertex not found in graph')
         if to_key not in self.vertices:
             raise KeyError(f'{to_key} vertex not found in graph')
-        self.get_vertex(from_key).points_to(to_key, weight)
+        self.get_vertex(from_key).points_to(to_key, int(weight))
         self.edge_count += 1
         if self.digraph is False:
             self.get_vertex(to_key).points_to(from_key, weight)
@@ -89,7 +89,7 @@ class ADTGraph(object):
                 if neighbor not in seen:
                     seen[neighbor] = seen[vertex_key] + [neighbor]
                     if neighbor == end:
-                        print(seen[neighbor])
+                        # print(seen[neighbor])
                         return seen[neighbor]
                     queue.enqueue(neighbor)
         return None
@@ -111,7 +111,7 @@ class ADTGraph(object):
     def dijkstras(self, start, end):
         '''finds the shortest weighted path between a start and an end
         returns the weight of the path'''
-        return 10
+        return 'DIJKSTRAS METHOD NOT IMPLEMENTED YET'
 
     def prims(self):
         edges = []
@@ -124,10 +124,34 @@ class ADTGraph(object):
                 smallest_edge = edge
         edges.append(smallest_edge)
 
+    def shortest_path_directed_acyclic(self, start, end, seen={}):
+        if start == end:
+            return 0
+        min_dist = float('inf')
+        print(start, end, self.get_vertex(start).weight_to(end))
+        print(seen)
+        if ((start, end)) in seen:
+            return seen[(start, end)]
+        if self.get_vertex(start).is_pointing_to(end):
+            min_dist = self.get_vertex(start).weight_to(end)
+        # for every edge in edge list
+        for edge in self.edges:
+            # if any of the edges points to our end
+            if edge[1] == end and edge[0] != start:
+                # recursively find the distance from start to end through that midpoint
+                dist = self.shortest_path_directed_acyclic(
+                    start, edge[0], seen) + self.get_vertex(edge[0]).weight_to(end)
+                if dist < min_dist:
+                    min_dist = dist
+        seen[(start, end)] = min_dist
+        return min_dist
+
 
 if __name__ == '__main__':
-    g = ADTGraph('file_reader_test.txt')
-    shotest_path = g.shortest_path('5', '2')
-    print(shotest_path)
-    dfs = g.recursive_dfs('5', '2')
-    print(dfs)
+    g = ADTGraph('acylic_directed_graph.txt')
+    d = g.shortest_path_directed_acyclic('a', 'f')
+    print(d)
+    # shotest_path = g.shortest_path('5', '2')
+    # print(shotest_path)
+    # dfs = g.recursive_dfs('5', '2')
+    # print(dfs)
