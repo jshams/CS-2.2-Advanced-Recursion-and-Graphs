@@ -128,8 +128,6 @@ class ADTGraph(object):
         if start == end:
             return 0
         min_dist = float('inf')
-        print(start, end, self.get_vertex(start).weight_to(end))
-        print(seen)
         if ((start, end)) in seen:
             return seen[(start, end)]
         if self.get_vertex(start).is_pointing_to(end):
@@ -148,7 +146,7 @@ class ADTGraph(object):
 
 
 if __name__ == '__main__':
-    g = ADTGraph('acylic_directed_graph.txt')
+    g = ADTGraph('acyclic_directed_graph.txt')
     d = g.shortest_path_directed_acyclic('a', 'f')
     print(d)
     # shotest_path = g.shortest_path('5', '2')
