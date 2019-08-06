@@ -11,6 +11,7 @@ class ADTGraph(object):
         self.vertex_count = 0
         self.edge_count = 0
         self.digraph = None
+        self.start = None
         if FILE_PATH is not None:
             all_verticies = self.f.verticies
             self.edges = self.f.edges
@@ -20,13 +21,29 @@ class ADTGraph(object):
 
     def __iter__(self):
         '''yields each vertex key'''
-        for vertex in self.vertices:
-            yield vertex
+        '''traverses the graph in BFS order from a start'''
+        start = self.start
+        seen = {start}
+        queue = Queue([start])
+        yield start
+        while not queue.is_empty():
+            vertex_key = queue.dequeue()
+            for neighbor in self.get_vertex(vertex_key).neighbors:
+                if neighbor not in seen:
+                    yield neighbor
+                    seen.add(neighbor)
+                    queue.enqueue(neighbor)
+
+    def __contains__(self, key):
+        return key in self.vertices
 
     def add_vertex(self, vert):
         '''adds an instance of Vertex to the graph.'''
-        self.vertices[vert] = Vertex(vert)
-        self.vertex_count += 1
+        if self.start is None:
+            self.start = vert
+        if not vert in self.vertices:
+            self.vertices[vert] = Vertex(vert)
+            self.vertex_count += 1
 
     def add_verticies(self, verts):
         for vert in verts:
@@ -65,7 +82,7 @@ class ADTGraph(object):
         # return [neighbor for neighbor in x.neighbors.values()]
         return list(x.neighbors.values())
 
-    def breadth_first_search(self, start: str):
+    def breadth_first_search(self, start):
         '''traverses the graph in BFS order from a start'''
         seen = {start}
         queue = Queue([start])
@@ -79,7 +96,7 @@ class ADTGraph(object):
                     queue.enqueue(neighbor)
         return list(seen)
 
-    def shortest_path(self, start: str, end: str):
+    def shortest_path(self, start, end: str):
         '''finds the shortest path between two points and returns None if there are none'''
         seen = {start: [start]}
         queue = Queue([start])
@@ -149,6 +166,7 @@ if __name__ == '__main__':
     g = ADTGraph('acyclic_directed_graph.txt')
     d = g.shortest_path_directed_acyclic('a', 'f')
     print(d)
+
     # shotest_path = g.shortest_path('5', '2')
     # print(shotest_path)
     # dfs = g.recursive_dfs('5', '2')
