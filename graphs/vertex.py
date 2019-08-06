@@ -14,6 +14,10 @@ class Vertex(object):
         '''Returns a boolean indicating whether the vertex is pointing to another item'''
         return key in self.neighbors
 
+    def weight_to(self, neighbor_key):
+        if self.is_pointing_to(neighbor_key):
+            return self.neighbors[neighbor_key]
+
     def __hash__(self):
         return hash(self.data)
 
