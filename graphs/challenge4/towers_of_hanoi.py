@@ -8,9 +8,10 @@ def towers_of_hanoi_moves(n):
         return [(1, 2), (1, 3), (2, 3)]
     else:
         if n not in seen:
-            seen[n] = pivot(towers_of_hanoi_moves(n - 1), 2, 3) + \
+            toh_n_minus_one = towers_of_hanoi_moves(n - 1)
+            seen[n] = pivot(toh_n_minus_one, 2, 3) + \
                 towers_of_hanoi_moves(
-                1) + pivot(towers_of_hanoi_moves(n - 1), 1, 2)
+                1) + pivot(toh_n_minus_one, 1, 2)
         return seen[n]
 
 
@@ -48,6 +49,5 @@ def swap(tup, switch1, switch2):
 
 
 if __name__ == '__main__':
-    for i in range(1):
-        # slow_towers_of_hanoi_moves(2)
-        towers_of_hanoi_moves(24)
+    z = towers_of_hanoi_moves(26)
+    print(len(z))
